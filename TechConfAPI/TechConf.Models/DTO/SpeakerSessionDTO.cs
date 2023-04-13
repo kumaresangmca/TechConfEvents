@@ -13,6 +13,9 @@ namespace TechConf.Models.DTO
         [Required]
         public int SpeakerId { get; set; }
         public SpeakerDTO? speaker { get; set; }
+        [Required]
+        public int OrganizationId { get; set; }
+        public OrganizationDTO? Organization { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
     }

@@ -34,10 +34,12 @@ namespace TechConf.Models.Models
         public string LinkForDetails { get; set; } = string.Empty;
 
         [Required]
+        [ForeignKey("Speaker")]
         public int SpeakerId { get; set; }
         public Speaker? Speaker { get; set; }
 
         [Required]
+        [ForeignKey("Organization")]
         public int OrganizationId { get; set; }
         public Organization? Organization { get; set; }
         [Required]

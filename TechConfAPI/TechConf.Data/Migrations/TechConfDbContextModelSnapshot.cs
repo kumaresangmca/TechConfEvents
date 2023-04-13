@@ -104,7 +104,7 @@ namespace TechConf.Data.Migrations
                             Id = 1,
                             ApiKey = "p1o2l3a4r5i6s7",
                             Code = "POLARIS",
-                            CreatedDate = new DateTime(2023, 4, 13, 19, 4, 21, 3, DateTimeKind.Local).AddTicks(9501),
+                            CreatedDate = new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8298),
                             Name = "Polaris Consulting & Services Limited"
                         },
                         new
@@ -112,7 +112,7 @@ namespace TechConf.Data.Migrations
                             Id = 2,
                             ApiKey = "v1i2r3t4u5s6a7",
                             Code = "VIR",
-                            CreatedDate = new DateTime(2023, 4, 13, 19, 4, 21, 3, DateTimeKind.Local).AddTicks(9528),
+                            CreatedDate = new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8330),
                             Name = "Virtusa Consulting Services Pvt Ltd"
                         },
                         new
@@ -120,7 +120,7 @@ namespace TechConf.Data.Migrations
                             Id = 3,
                             ApiKey = "s1o2f3t4c5r6y7l8i9c0",
                             Code = "SOFT",
-                            CreatedDate = new DateTime(2023, 4, 13, 19, 4, 21, 3, DateTimeKind.Local).AddTicks(9530),
+                            CreatedDate = new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8333),
                             Name = "Softcrylic"
                         },
                         new
@@ -128,7 +128,7 @@ namespace TechConf.Data.Migrations
                             Id = 4,
                             ApiKey = "t1c2c3",
                             Code = "TCS",
-                            CreatedDate = new DateTime(2023, 4, 13, 19, 4, 21, 3, DateTimeKind.Local).AddTicks(9532),
+                            CreatedDate = new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8335),
                             Name = "Tata Consultancy Services"
                         },
                         new
@@ -136,7 +136,7 @@ namespace TechConf.Data.Migrations
                             Id = 5,
                             ApiKey = "c1t2s3",
                             Code = "CTS",
-                            CreatedDate = new DateTime(2023, 4, 13, 19, 4, 21, 3, DateTimeKind.Local).AddTicks(9534),
+                            CreatedDate = new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8338),
                             Name = "Cognizant Technology Solutions Corp"
                         });
                 });
@@ -162,6 +162,9 @@ namespace TechConf.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("SocialLinks")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -170,6 +173,8 @@ namespace TechConf.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
 
                     b.ToTable("Speakers");
                 });
@@ -193,6 +198,9 @@ namespace TechConf.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("SpeakerId")
                         .HasColumnType("INTEGER");
 
@@ -205,6 +213,8 @@ namespace TechConf.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EventId");
+
+                    b.HasIndex("OrganizationId");
 
                     b.HasIndex("SpeakerId");
 
@@ -230,11 +240,28 @@ namespace TechConf.Data.Migrations
                     b.Navigation("Speaker");
                 });
 
+            modelBuilder.Entity("TechConf.Models.Models.Speaker", b =>
+                {
+                    b.HasOne("TechConf.Models.Models.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+                });
+
             modelBuilder.Entity("TechConf.Models.Models.SpeakerSession", b =>
                 {
                     b.HasOne("TechConf.Models.Models.Event", "Event")
                         .WithMany()
                         .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TechConf.Models.Models.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -245,6 +272,8 @@ namespace TechConf.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Event");
+
+                    b.Navigation("Organization");
 
                     b.Navigation("speaker");
                 });

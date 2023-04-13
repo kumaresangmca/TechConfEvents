@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TechConf.Data;
 using TechConf.Models.DTO;
-using TechConf.Models.Models;
 using TechConf.Services.Contracts;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -28,7 +25,6 @@ namespace TechConf.Web.Controllers
             var data = await service.GetAllAsync(1, 100);
             resultDTO.Results = data;
             return Ok(resultDTO);
-
         }
 
         // GET api/Organization/1

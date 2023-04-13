@@ -3,7 +3,7 @@ using TechConf.Data;
 using TechConf.Models.Models;
 using TechConf.Repositories.Contracts;
 
-namespace TechConf.Repositories.Implementaions
+namespace TechConf.Repositories.Implementations
 {
     public class SpeakerSessionRepository : BaseRepository, IRepository<SpeakerSession>
     {

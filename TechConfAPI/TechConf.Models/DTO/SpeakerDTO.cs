@@ -26,5 +26,10 @@ namespace TechConf.Models.DTO
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
 
+        [Required]
+        public int OrganizationId { get; set; }
+
+        public OrganizationDTO? Organization { get; set; }
+
     }
 }

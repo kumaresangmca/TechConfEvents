@@ -3,7 +3,7 @@ using TechConf.Data;
 using TechConf.Models.Models;
 using TechConf.Repositories.Contracts;
 
-namespace TechConf.Repositories.Implementaions
+namespace TechConf.Repositories.Implementations
 {
     public class OrganizationRepository : BaseRepository, IOrganizationRepository<Organization>
     {

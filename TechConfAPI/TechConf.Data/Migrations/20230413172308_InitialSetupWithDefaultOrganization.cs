@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TechConf.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDbSetupWithDefaultOrganizationData : Migration
+    public partial class InitialSetupWithDefaultOrganization : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,11 +41,18 @@ namespace TechConf.Data.Migrations
                     SocialLinks = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    OrganizationId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Speakers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Speakers_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organizations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,23 +91,39 @@ namespace TechConf.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sessions",
+                name: "SpeakerSessions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     EventId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SpeakerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    OrganizationId = table.Column<int>(type: "INTEGER", nullable: false),
                     StartTime = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    EndTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sessions", x => x.Id);
+                    table.PrimaryKey("PK_SpeakerSessions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sessions_Events_EventId",
+                        name: "FK_SpeakerSessions_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SpeakerSessions_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organizations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SpeakerSessions_Speakers_SpeakerId",
+                        column: x => x.SpeakerId,
+                        principalTable: "Speakers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -110,11 +133,11 @@ namespace TechConf.Data.Migrations
                 columns: new[] { "Id", "ApiKey", "Code", "CreatedDate", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, "p1o2l3a4r5i6s7", "POLARIS", new DateTime(2023, 4, 13, 11, 31, 50, 391, DateTimeKind.Local).AddTicks(5921), "Polaris Consulting & Services Limited", null },
-                    { 2, "v1i2r3t4u5s6a7", "VIR", new DateTime(2023, 4, 13, 11, 31, 50, 391, DateTimeKind.Local).AddTicks(5943), "Virtusa Consulting Services Pvt Ltd", null },
-                    { 3, "s1o2f3t4c5r6y7l8i9c0", "SOFT", new DateTime(2023, 4, 13, 11, 31, 50, 391, DateTimeKind.Local).AddTicks(5945), "Softcrylic", null },
-                    { 4, "t1c2c3", "TCS", new DateTime(2023, 4, 13, 11, 31, 50, 391, DateTimeKind.Local).AddTicks(5948), "Tata Consultancy Services", null },
-                    { 5, "c1t2s3", "CTS", new DateTime(2023, 4, 13, 11, 31, 50, 391, DateTimeKind.Local).AddTicks(5950), "Cognizant Technology Solutions Corp", null }
+                    { 1, "p1o2l3a4r5i6s7", "POLARIS", new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8298), "Polaris Consulting & Services Limited", null },
+                    { 2, "v1i2r3t4u5s6a7", "VIR", new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8330), "Virtusa Consulting Services Pvt Ltd", null },
+                    { 3, "s1o2f3t4c5r6y7l8i9c0", "SOFT", new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8333), "Softcrylic", null },
+                    { 4, "t1c2c3", "TCS", new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8335), "Tata Consultancy Services", null },
+                    { 5, "c1t2s3", "CTS", new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8338), "Cognizant Technology Solutions Corp", null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -128,25 +151,40 @@ namespace TechConf.Data.Migrations
                 column: "SpeakerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sessions_EventId",
-                table: "Sessions",
+                name: "IX_Speakers_OrganizationId",
+                table: "Speakers",
+                column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SpeakerSessions_EventId",
+                table: "SpeakerSessions",
                 column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SpeakerSessions_OrganizationId",
+                table: "SpeakerSessions",
+                column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SpeakerSessions_SpeakerId",
+                table: "SpeakerSessions",
+                column: "SpeakerId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Sessions");
+                name: "SpeakerSessions");
 
             migrationBuilder.DropTable(
                 name: "Events");
 
             migrationBuilder.DropTable(
-                name: "Organizations");
+                name: "Speakers");
 
             migrationBuilder.DropTable(
-                name: "Speakers");
+                name: "Organizations");
         }
     }
 }

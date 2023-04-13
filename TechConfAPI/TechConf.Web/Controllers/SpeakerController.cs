@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mime;
 using TechConf.Models.DTO;
 using TechConf.Models.Models;
 using TechConf.Services.Contracts;
@@ -46,6 +47,7 @@ namespace TechConf.Web.Controllers
         }
         //post: api/speaker
         [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ResultDTO<SpeakerDTO?>))]
         public async Task<ActionResult> Post([FromBody] SpeakerDTO speaker)
         {
@@ -57,7 +59,7 @@ namespace TechConf.Web.Controllers
                 return BadRequest(resultDTO);
             }
             resultDTO.Results = data;
-            return Created(nameof(GetById), new { id = data.Id });
+            return CreatedAtAction(nameof(GetById), new { id = data.Id }, data);
         }
         //put: api/speaker/1
         [HttpPut("{id:int}")]

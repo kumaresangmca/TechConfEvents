@@ -16,11 +16,17 @@ namespace TechConf.Models.Models
         [Required]
         public string Name { get; set; } = string.Empty;
         [Required]
+        [ForeignKey("Event")]
         public int EventId {  get; set; }
         public Event? Event { get; set; }
         [Required]
+        [ForeignKey("Speaker")]
         public int SpeakerId { get; set; }
         public Speaker? speaker { get; set; }
+        [Required]
+        [ForeignKey("Organization")]
+        public int OrganizationId { get; set; }
+        public Organization? Organization { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public DateTime CreatedDate { get; set; }

@@ -3,9 +3,9 @@ using TechConf.Mappers.Implementations;
 using TechConf.Models.DTO;
 using TechConf.Models.Models;
 using TechConf.Repositories.Contracts;
-using TechConf.Repositories.Implementaions;
+using TechConf.Repositories.Implementations;
 using TechConf.Services.Contracts;
-using TechConf.Services.Implementaions;
+using TechConf.Services.Implementations;
 
 namespace TechConf.Web
 {

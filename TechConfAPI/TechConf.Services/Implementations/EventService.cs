@@ -4,7 +4,7 @@ using TechConf.Models.Models;
 using TechConf.Repositories.Contracts;
 using TechConf.Services.Contracts;
 
-namespace TechConf.Services.Implementaions
+namespace TechConf.Services.Implementations
 {
     public class EventService : IService<EventDTO>
     {

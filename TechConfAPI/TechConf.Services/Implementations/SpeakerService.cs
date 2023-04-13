@@ -4,27 +4,27 @@ using TechConf.Models.Models;
 using TechConf.Repositories.Contracts;
 using TechConf.Services.Contracts;
 
-namespace TechConf.Services.Implementaions
+namespace TechConf.Services.Implementations
 {
-    public class SpeakerSessionService : IService<SpeakerSessionDTO>
+    public class SpeakerService : IService<SpeakerDTO>
     {
-        private readonly IRepository<SpeakerSession> repository;
-        private readonly IMapper<SpeakerSession, SpeakerSessionDTO> mapper;
+        private readonly IRepository<Speaker> repository;
+        private readonly IMapper<Speaker, SpeakerDTO> mapper;
 
-        public SpeakerSessionService(IRepository<SpeakerSession> repository,
-                                   IMapper<SpeakerSession, SpeakerSessionDTO> mapper)
+        public SpeakerService(IRepository<Speaker> repository,
+                                   IMapper<Speaker, SpeakerDTO> mapper)
         {
             this.repository = repository;
             this.mapper = mapper;
         }
-        public async Task<List<SpeakerSessionDTO>> GetAllAsync(int pageNo, int pageSize)
+        public async Task<List<SpeakerDTO>> GetAllAsync(int pageNo, int pageSize)
         {
-            List<SpeakerSessionDTO> SpeakerSessionDTOs = new List<SpeakerSessionDTO>();
+            List<SpeakerDTO> speakerDTOs = new List<SpeakerDTO>();
             var result = await repository.GetAllAsync(pageNo, pageSize);
-            SpeakerSessionDTOs = result.Select(o => mapper.ModelServiceModelToDTOModel(o)).ToList();
-            return SpeakerSessionDTOs;
+            speakerDTOs = result.Select(o => mapper.ModelServiceModelToDTOModel(o)).ToList();
+            return speakerDTOs;
         }
-        public async Task<SpeakerSessionDTO?> GetByIdAsync(int id)
+        public async Task<SpeakerDTO?> GetByIdAsync(int id)
         {
             var speaker = await repository.GetByIdAsync(id);
             if (speaker == null)
@@ -33,7 +33,7 @@ namespace TechConf.Services.Implementaions
             }
             return mapper.ModelServiceModelToDTOModel(speaker);
         }
-        public async Task<SpeakerSessionDTO> AddAsync(SpeakerSessionDTO model)
+        public async Task<SpeakerDTO> AddAsync(SpeakerDTO model)
         {
             var speaker = mapper.MapDTOModelToServiceModel(model);
             speaker.CreatedDate = DateTime.Now;
@@ -41,7 +41,7 @@ namespace TechConf.Services.Implementaions
             SaveChangesAsync();
             return mapper.ModelServiceModelToDTOModel(createdRecord);
         }
-        public async Task<bool> EditAsync(int id, SpeakerSessionDTO model)
+        public async Task<bool> EditAsync(int id, SpeakerDTO model)
         {
             var speaker = mapper.MapDTOModelToServiceModel(model);
             speaker.UpdatedDate = DateTime.Now;
@@ -65,4 +65,5 @@ namespace TechConf.Services.Implementaions
             repository.SaveChangesAsync();
         }
     }
+
 }

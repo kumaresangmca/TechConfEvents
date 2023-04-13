@@ -30,6 +30,12 @@ namespace TechConf.Models.Models
         [Required]
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
+
+        [Required]
+        [ForeignKey("Organization")]
+        public int OrganizationId { get; set; }
+
+        public Organization? Organization { get; set; }
         public ICollection<Event>? Events { get; set; }
 
     }
