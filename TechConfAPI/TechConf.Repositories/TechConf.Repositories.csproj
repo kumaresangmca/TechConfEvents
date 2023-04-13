@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Contracts\IEventRepository.cs" />
+    <Compile Remove="Contracts\ISpeakerRepository.cs" />
+    <Compile Remove="Contracts\ISpeakerSessionRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TechConf.Data\TechConf.Data.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Contracts\IEventService.cs" />
+    <Compile Remove="Contracts\ISpeakerService.cs" />
+    <Compile Remove="Contracts\ISpeakerSessionService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TechConf.Mappers\TechConf.Mappers.csproj" />
+    <ProjectReference Include="..\TechConf.Models\TechConf.Models.csproj" />
+    <ProjectReference Include="..\TechConf.Repositories\TechConf.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>
