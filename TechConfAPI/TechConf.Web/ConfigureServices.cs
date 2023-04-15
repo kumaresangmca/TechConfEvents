@@ -15,16 +15,16 @@ namespace TechConf.Web
         {
             servicesCollection.AddScoped<IOrganizationRepository<Organization>, OrganizationRepository>();
             servicesCollection.AddScoped<IRepository<Speaker>, SpeakerRepository>();
-            servicesCollection.AddScoped<IRepository<Event>, EventRepository>();
-            servicesCollection.AddScoped<IRepository<SpeakerSession>, SpeakerSessionRepository>();
+            servicesCollection.AddScoped<IEventsRepository<Event>, EventRepository>();
+            servicesCollection.AddScoped<ISpeakerSessionsRepository<SpeakerSession>, SpeakerSessionRepository>();
         }
 
         public static void RegisterServices(IServiceCollection servicesCollection)
         {
             servicesCollection.AddScoped<IOrganizationService<OrganizationDTO>, OrganizationService>();
             servicesCollection.AddScoped<IService<SpeakerDTO>, SpeakerService>();
-            servicesCollection.AddScoped<IService<EventDTO>, EventService>();
-            servicesCollection.AddScoped<IService<SpeakerSessionDTO>, SpeakerSessionService>();
+            servicesCollection.AddScoped<IEventService<EventDTO>, EventService>();
+            servicesCollection.AddScoped<ISpeakerSessionService<SpeakerSessionDTO>, SpeakerSessionService>();
         }
 
         public static void RegisterMappers(IServiceCollection servicesCollection)

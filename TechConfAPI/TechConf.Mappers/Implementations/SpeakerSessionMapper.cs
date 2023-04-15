@@ -11,8 +11,8 @@ namespace TechConf.Mappers.Implementations
             return new SpeakerSession
             {
                 Id = dataDTO.Id,
+                Name = dataDTO.Name,
                 EventId = dataDTO.EventId,
-                SpeakerId = dataDTO.SpeakerId,
                 StartTime = dataDTO.StartTime,
                 EndTime = dataDTO.EndTime
             };
@@ -23,8 +23,8 @@ namespace TechConf.Mappers.Implementations
             return new SpeakerSessionDTO
             {
                 Id = data.Id,
+                Name = data.Name,
                 EventId = data.EventId,
-                SpeakerId = data.SpeakerId,
                 StartTime = data.StartTime,
                 EndTime = data.EndTime
             };

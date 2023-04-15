@@ -104,7 +104,7 @@ namespace TechConf.Data.Migrations
                             Id = 1,
                             ApiKey = "p1o2l3a4r5i6s7",
                             Code = "POLARIS",
-                            CreatedDate = new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8298),
+                            CreatedDate = new DateTime(2023, 4, 15, 13, 57, 41, 956, DateTimeKind.Local).AddTicks(5802),
                             Name = "Polaris Consulting & Services Limited"
                         },
                         new
@@ -112,7 +112,7 @@ namespace TechConf.Data.Migrations
                             Id = 2,
                             ApiKey = "v1i2r3t4u5s6a7",
                             Code = "VIR",
-                            CreatedDate = new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8330),
+                            CreatedDate = new DateTime(2023, 4, 15, 13, 57, 41, 956, DateTimeKind.Local).AddTicks(5829),
                             Name = "Virtusa Consulting Services Pvt Ltd"
                         },
                         new
@@ -120,7 +120,7 @@ namespace TechConf.Data.Migrations
                             Id = 3,
                             ApiKey = "s1o2f3t4c5r6y7l8i9c0",
                             Code = "SOFT",
-                            CreatedDate = new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8333),
+                            CreatedDate = new DateTime(2023, 4, 15, 13, 57, 41, 956, DateTimeKind.Local).AddTicks(5831),
                             Name = "Softcrylic"
                         },
                         new
@@ -128,7 +128,7 @@ namespace TechConf.Data.Migrations
                             Id = 4,
                             ApiKey = "t1c2c3",
                             Code = "TCS",
-                            CreatedDate = new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8335),
+                            CreatedDate = new DateTime(2023, 4, 15, 13, 57, 41, 956, DateTimeKind.Local).AddTicks(5832),
                             Name = "Tata Consultancy Services"
                         },
                         new
@@ -136,7 +136,7 @@ namespace TechConf.Data.Migrations
                             Id = 5,
                             ApiKey = "c1t2s3",
                             Code = "CTS",
-                            CreatedDate = new DateTime(2023, 4, 13, 22, 53, 7, 759, DateTimeKind.Local).AddTicks(8338),
+                            CreatedDate = new DateTime(2023, 4, 15, 13, 57, 41, 956, DateTimeKind.Local).AddTicks(5833),
                             Name = "Cognizant Technology Solutions Corp"
                         });
                 });
@@ -198,12 +198,6 @@ namespace TechConf.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SpeakerId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("TEXT");
 
@@ -213,10 +207,6 @@ namespace TechConf.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EventId");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.HasIndex("SpeakerId");
 
                     b.ToTable("SpeakerSessions");
                 });
@@ -259,23 +249,7 @@ namespace TechConf.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TechConf.Models.Models.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TechConf.Models.Models.Speaker", "speaker")
-                        .WithMany()
-                        .HasForeignKey("SpeakerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Event");
-
-                    b.Navigation("Organization");
-
-                    b.Navigation("speaker");
                 });
 
             modelBuilder.Entity("TechConf.Models.Models.Speaker", b =>

@@ -1,0 +1,36 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+    <button type="button" class="btn btn-primary float-right" [routerLink]="['/speaker/upsert']" >Add Speaker</button>
+</div>
+<hr>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Tile</th>
+        <th>Descriptions</th>
+        <th>Event Dat</th>
+        <th>Social Links</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="speakers.length">
+      <tr *ngFor="let speaker of speakers">
+        <td>{{speaker.name}}</td>
+        <td>{{speaker.bio}}</td>
+        <td>{{speaker.email}}</td>
+        <td>{{speaker.socialLinks}}</td>
+        <td>
+          <a [routerLink]="['/speaker/upsert', speaker.id]" >Edit</a>
+          |
+          <a (click)="onDelete(speaker)">Delete</a></td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!speakers.length" align="center">
+      <tr>
+        <td colspan="5">No Speakers Found</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+

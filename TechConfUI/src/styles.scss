@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+.form-control.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+.error-text{
+  color: red;
+}
+.float-right{
+  float: right;
+}
+a{
+  cursor: pointer;
+}

@@ -27,22 +27,37 @@ namespace TechConf.Services.Implementations
             return organizationDTOs;
         }
 
-        public async Task<string?> GetAPIKeyByCodeAsync(string code)
+        public async Task<OrganizationDTO?> GetByCodeAsync(string code)
         {
-            var apiKey = await repository.GetAPIKeyByCodeAsync(code);          
-            return apiKey;
+            var organization = await repository.GetByCodeAsync(code);
+            if (organization == null)
+            {
+                return null;
+            }
+            return mapper.ModelServiceModelToDTOModel(organization);
         }
 
         public async Task<OrganizationDTO?> GetByIdAsync(int id)
         {
             var organization = await repository.GetByIdAsync(id);
-            if(organization == null)
+            if (organization == null)
             {
                 return null;
             }
             return mapper.ModelServiceModelToDTOModel(organization);
-            
+
         }
+        public async Task<OrganizationDTO?> GetByApiKeyAsync(string apiKey)
+        {
+            var organization = await repository.GetByApiKeyAsync(apiKey);
+            if (organization == null)
+            {
+                return null;
+            }
+            return mapper.ModelServiceModelToDTOModel(organization); ;
+        }
+
+        // TODO
         public Task<OrganizationDTO> AddAsync(OrganizationDTO model)
         {
             throw new NotImplementedException();
@@ -57,7 +72,6 @@ namespace TechConf.Services.Implementations
         {
             throw new NotImplementedException();
         }
-
 
         public void SaveChangesAsync()
         {

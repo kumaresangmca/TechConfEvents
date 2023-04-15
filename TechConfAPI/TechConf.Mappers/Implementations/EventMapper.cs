@@ -6,6 +6,14 @@ namespace TechConf.Mappers.Implementations
 {
     public class EventMapper : IMapper<Event, EventDTO>
     {
+        private readonly IMapper<Speaker, SpeakerDTO> speakerMapper;
+        private readonly IMapper<SpeakerSession, SpeakerSessionDTO> sessionMapper;
+        public EventMapper(IMapper<Speaker, SpeakerDTO> speakerMapper,
+            IMapper<SpeakerSession, SpeakerSessionDTO> sessionMapper)
+        {
+            this.speakerMapper = speakerMapper;
+            this.sessionMapper = sessionMapper;
+        }
         public Event MapDTOModelToServiceModel(EventDTO dataDTO)
         {
             return new Event
@@ -25,7 +33,7 @@ namespace TechConf.Mappers.Implementations
 
         public EventDTO ModelServiceModelToDTOModel(Event data)
         {
-            return new EventDTO
+            var eventDTO =new EventDTO
             {
                 Id = data.Id,
                 Title = data.Title,
@@ -38,6 +46,18 @@ namespace TechConf.Mappers.Implementations
                 OrganizationId = data.OrganizationId,
                 Type = data.Type
             };
+            if (data.Speaker != null)
+            {
+                eventDTO.speaker = speakerMapper.ModelServiceModelToDTOModel(data.Speaker);
+            }
+            if (data.Sessions != null && data.Sessions.Any())
+            {
+                foreach (var session in data.Sessions)
+                {
+                    eventDTO.Sessions.Add(sessionMapper.ModelServiceModelToDTOModel(session));
+                }
+            }
+            return eventDTO;
         }
     }
 }

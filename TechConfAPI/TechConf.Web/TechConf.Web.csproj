@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TechConf.Common\TechConf.Common.csproj" />
     <ProjectReference Include="..\TechConf.Data\TechConf.Data.csproj" />
     <ProjectReference Include="..\TechConf.Mappers\TechConf.Mappers.csproj" />
     <ProjectReference Include="..\TechConf.Repositories\TechConf.Repositories.csproj" />

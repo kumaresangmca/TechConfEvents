@@ -1,15 +1,8 @@
-﻿using TechConf.Models.DTO;
-using TechConf.Models.Models;
-
-namespace TechConf.Services.Contracts
+﻿namespace TechConf.Services.Contracts
 {
-    public interface ISpeakerSessionService
+    public interface ISpeakerSessionService<DTOModel> : IService<DTOModel> where DTOModel : class
     {
-        public Task<List<SpeakerSessionDTO>> GetAllAsync(int pageNo, int pageSize);
-        public Task<SpeakerSessionDTO?> GetByIdAsync(int id);
-        public Task<SpeakerSessionDTO> AddAsync(SpeakerSessionDTO speakerSession);
-        public Task<bool> EditAsync(int id, SpeakerSessionDTO speakerSession);
-        public void DeleteAsync(SpeakerSessionDTO speakerSession);
-        public void SaveChangesAsync();
+        public Task<List<DTOModel>> GetAllByEventIdAsync(int eventId, int pageNo, int pageSize);
+        public Task<DTOModel?> GetByEventAndSessionIdAsync(int eventId, int id);
     }
 }

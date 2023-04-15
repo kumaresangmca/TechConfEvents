@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <h1>{{ isEdit ? 'Edit' : 'Add'}} Speaker Session</h1>
+  </div>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <button type="button" class="btn btn-lg btn-default float-right" [routerLink]="['/speakersessions/', eventId]">Back</button>
+</div>
+</div>
+<hr/>
+
+<form *ngIf="showForm" [formGroup]="form" (ngSubmit)="onSubmit()" role="form">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" formControlName="name" class="form-control" placeholder="Enter Session Name">
+  </div>
+  <div class="form-group">
+    <label for="startTime">Start Time</label>
+    <input type="datetime" formControlName="startTime" class="form-control" placeholder="Enter Start Time"/>
+  </div>
+  <div class="form-group">
+    <label for="endTime">End Time</label>
+    <input type="datetime" formControlName="endTime" class="form-control" placeholder="Enter End Time"/>
+  </div>
+  <button type="submit" [disabled]="!form.valid && isFormSubmitting" class="btn btn-primary" [innerText]="isFormSubmitting? 'Submitting...' : 'Submit'"></button>
+</form>

@@ -25,17 +25,26 @@ namespace TechConf.Repositories.Implementations
             return await dbContext.Organizations.FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        // Get API Key by Organization Code
-        public async Task<string?> GetAPIKeyByCodeAsync(string code)
+        // Get Organization By Code
+        public async Task<Organization?> GetByCodeAsync(string code)
         {
             Organization? organization = await dbContext.Organizations.FirstOrDefaultAsync(s => s.Code == code);
             if (organization == null)
             {
                 return null;
             }
-            return organization.ApiKey;
+            return organization;
         }
-
+        // Get Organization By API Key
+        public async Task<Organization?> GetByApiKeyAsync(string apiKey)
+        {
+            Organization? organization = await dbContext.Organizations.FirstOrDefaultAsync(s => s.ApiKey == apiKey);
+            if (organization == null)
+            {
+                return null;
+            }
+            return organization;
+        }
         // Add Organization
         public async Task<Organization> AddAsync(Organization model)
         {
@@ -64,6 +73,7 @@ namespace TechConf.Repositories.Implementations
         public void DeleteAsync(Organization model)
         {
             dbContext.Organizations.Remove(model);
-        }       
+        }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using TechConf.Mappers.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using TechConf.Mappers.Contracts;
 using TechConf.Models.DTO;
 using TechConf.Models.Models;
 using TechConf.Repositories.Contracts;
@@ -6,12 +7,12 @@ using TechConf.Services.Contracts;
 
 namespace TechConf.Services.Implementations
 {
-    public class EventService : IService<EventDTO>
+    public class EventService : IEventService<EventDTO>
     {
-        private readonly IRepository<Event> repository;
+        private readonly IEventsRepository<Event> repository;
         private readonly IMapper<Event, EventDTO> mapper;
 
-        public EventService(IRepository<Event> repository,
+        public EventService(IEventsRepository<Event> repository,
                                    IMapper<Event, EventDTO> mapper)
         {
             this.repository = repository;
@@ -60,9 +61,22 @@ namespace TechConf.Services.Implementations
             SaveChangesAsync();
             return true;
         }
+        //Download Events
+        public async Task<EventDTO?> DownloadEventByIdAsync(int id)
+        {
+            var eventEntity = await repository.DownloadEventByIdAsync(id);
+            if(eventEntity == null)
+            {
+                return null;
+            }
+            var eventDTO = mapper.ModelServiceModelToDTOModel(eventEntity);
+            return eventDTO;
+        }
         public void SaveChangesAsync()
         {
             repository.SaveChangesAsync();
         }
+
+        
     }
 }

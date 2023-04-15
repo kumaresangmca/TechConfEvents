@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <h1>{{ isEdit ? 'Edit' : 'Add'}} Event</h1>
+  </div>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <button type="button" class="btn btn-lg btn-default float-right" [routerLink]="['/events']">Back</button>
+</div>
+</div>
+<hr/>
+
+<form *ngIf="showForm" [formGroup]="form" (ngSubmit)="onSubmit()" role="form">
+  <div class="form-group">
+    <label for="speaker">Speaker</label>
+    <select class="form-control" formControlName="speakerId">
+        <option value="">--Select Speaker--</option>
+        <option *ngFor="let speaker of speakers" [value]="speaker.id">{{speaker.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" formControlName="title" class="form-control" placeholder="Enter Title">
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea formControlName="description" class="form-control" placeholder="Enter Description"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="date">Date</label>
+    <input type="text" formControlName="eventDate" class="form-control" placeholder="Enter Date(YYYY-MM-DD)">
+  </div>
+  <div class="form-group">
+    <label for="type">Type</label>
+    <select class="form-control" formControlName="type">
+        <option value="">--Select Type--</option>
+        <option value="0">Online</option>
+        <option value="1">Offline</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="venu">Venu</label>
+    <input type="text" formControlName="venu" class="form-control" placeholder="Enter Venu">
+  </div>
+  <div class="form-group">
+    <label for="website">Website</label>
+    <input type="text" formControlName="website" class="form-control" placeholder="Enter Website">
+  </div>
+  <div class="form-group">
+    <label for="linkForDetails">Link For Details</label>
+    <input type="text" formControlName="linkForDetails" class="form-control" placeholder="Enter Details">
+  </div>
+  <button type="submit" [disabled]="!form.valid && isFormSubmitting" class="btn btn-primary" [innerText]="isFormSubmitting? 'Submitting...' : 'Submit'"></button>
+</form>

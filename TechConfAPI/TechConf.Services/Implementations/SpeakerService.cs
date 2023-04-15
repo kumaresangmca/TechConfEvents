@@ -1,4 +1,7 @@
-﻿using TechConf.Mappers.Contracts;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+using TechConf.Common.Constant;
+using TechConf.Mappers.Contracts;
 using TechConf.Models.DTO;
 using TechConf.Models.Models;
 using TechConf.Repositories.Contracts;
@@ -12,7 +15,7 @@ namespace TechConf.Services.Implementations
         private readonly IMapper<Speaker, SpeakerDTO> mapper;
 
         public SpeakerService(IRepository<Speaker> repository,
-                                   IMapper<Speaker, SpeakerDTO> mapper)
+                              IMapper<Speaker, SpeakerDTO> mapper)
         {
             this.repository = repository;
             this.mapper = mapper;

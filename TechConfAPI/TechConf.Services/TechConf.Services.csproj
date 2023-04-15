@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Contracts\IEventService.cs" />
     <Compile Remove="Contracts\ISpeakerService.cs" />
-    <Compile Remove="Contracts\ISpeakerSessionService.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TechConf.Common\TechConf.Common.csproj" />
     <ProjectReference Include="..\TechConf.Mappers\TechConf.Mappers.csproj" />
     <ProjectReference Include="..\TechConf.Models\TechConf.Models.csproj" />
     <ProjectReference Include="..\TechConf.Repositories\TechConf.Repositories.csproj" />

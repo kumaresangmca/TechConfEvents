@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TechConf.Models.Enum;
+using TechConf.Models.Models;
 
 namespace TechConf.Models.DTO
 {
@@ -27,5 +28,13 @@ namespace TechConf.Models.DTO
         [Required]
         public int OrganizationId { get; set; }        
         public OrganizationDTO? organization { get; set; }
+
+        public ICollection<SpeakerSessionDTO> Sessions { get; set; }
+
+        public EventDTO()
+        {
+            Sessions = new List<SpeakerSessionDTO>();
+            
+        }
     }
 }

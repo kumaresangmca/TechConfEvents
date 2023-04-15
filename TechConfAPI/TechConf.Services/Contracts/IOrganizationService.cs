@@ -5,6 +5,7 @@ namespace TechConf.Services.Contracts
 {
     public interface IOrganizationService<DTOModel> : IService<DTOModel> where DTOModel: class
     {
-        public Task<string?> GetAPIKeyByCodeAsync(string code);
+        public Task<DTOModel?> GetByCodeAsync(string code);
+        public Task<DTOModel?> GetByApiKeyAsync(string apiKey);
     }
 }

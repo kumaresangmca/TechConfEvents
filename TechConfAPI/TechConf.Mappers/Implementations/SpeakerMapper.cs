@@ -14,7 +14,8 @@ namespace TechConf.Mappers.Implementations
                  Name = dataDTO.Name,
                  Bio = dataDTO.Bio,
                  Email = dataDTO.Email,
-                 SocialLinks = dataDTO.SocialLinks                 
+                 SocialLinks = dataDTO.SocialLinks,
+                 OrganizationId = dataDTO.OrganizationId
             };
         }
 
@@ -26,7 +27,8 @@ namespace TechConf.Mappers.Implementations
                 Name = data.Name,
                 Bio = data.Bio,
                 Email = data.Email,
-                SocialLinks = data.SocialLinks
+                SocialLinks = data.SocialLinks,
+                OrganizationId = data.OrganizationId
             };
         }
     }

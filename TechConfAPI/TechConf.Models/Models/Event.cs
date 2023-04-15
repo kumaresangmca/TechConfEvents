@@ -46,5 +46,12 @@ namespace TechConf.Models.Models
         public DateTime CreatedDate { get; set; }
 
         public DateTime? UpdatedDate { get; set; }
+
+        public ICollection<SpeakerSession> Sessions { get; set; }
+
+       public Event()
+        {
+            this.Sessions = new List<SpeakerSession>();
+        }
     }
 }

@@ -1,0 +1,20 @@
+<h1>Login</h1>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <form [formGroup]="form" (ngSubmit)="submitForm()" role="form">
+      <div class="form-group">
+        <label for="code">Organization Code</label>
+        <input
+          type="text"
+          formControlName="code"
+          class="form-control"
+          placeholder="Enter Organization Code"
+        />
+        <span *ngIf="isInvalidCode" class="error-text">Invalid Organization Code. Pls. enter the valid code.</span>
+      </div>
+
+      <button [disabled]="!form.valid" type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </div>
+</div>
