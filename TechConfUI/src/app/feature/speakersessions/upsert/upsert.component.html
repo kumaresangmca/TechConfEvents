@@ -15,11 +15,13 @@
   </div>
   <div class="form-group">
     <label for="startTime">Start Time</label>
-    <input type="datetime" formControlName="startTime" class="form-control" placeholder="Enter Start Time"/>
+    <timepicker formControlName="startTime" ></timepicker>
+    <!-- <input type="text" formControlName="startTime" class="form-control" placeholder="Enter Start Time"/> -->
   </div>
   <div class="form-group">
     <label for="endTime">End Time</label>
-    <input type="datetime" formControlName="endTime" class="form-control" placeholder="Enter End Time"/>
+    <timepicker formControlName="endTime" ></timepicker>
+    <!-- <input type="datetime" formControlName="endTime" class="form-control" placeholder="Enter End Time"/> -->
   </div>
-  <button type="submit" [disabled]="!form.valid && isFormSubmitting" class="btn btn-primary" [innerText]="isFormSubmitting? 'Submitting...' : 'Submit'"></button>
+  <button type="submit" [disabled]="!form.valid  || isFormSubmitting" class="btn btn-primary" [innerText]="isFormSubmitting? 'Submitting...' : 'Submit'"></button>
 </form>

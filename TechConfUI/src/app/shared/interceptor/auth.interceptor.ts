@@ -21,6 +21,20 @@ export class AuthInterceptor implements HttpInterceptor {
       let OrganizationDTO = this.authService.GetOrganizationDetails();
       req = req.clone({ setHeaders: { apiKey: OrganizationDTO.apiKey } });
     }
-    return next.handle(req);
+    this.loaderService.loader.next(true);
+    return new Observable(observer => {
+      next.handle(req).subscribe(
+        s => {
+          this.loaderService.loader.next(false);
+          observer.next(s);
+          // observer.complete();
+        },
+        e => {
+          this.loaderService.loader.next(false);
+          observer.next(e);
+          // observer.complete();
+        }
+      )
+    });
   }
 }

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -28,7 +29,8 @@ export class EventUpsertComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private datePipe : DatePipe
   ) {
     activatedRoute.params.subscribe((data: any) => {
       if (+data.id > 0) {
@@ -50,7 +52,7 @@ export class EventUpsertComponent implements OnInit, OnDestroy {
       speakerId: ['', Validators.required],
       title: ['', Validators.required],
       description: ['', Validators.required],
-      eventDate: ['', Validators.required],
+      eventDate: [new Date(), Validators.required],
       type: ['', Validators.required],
       venu: ['', Validators.required],
       website: ['', Validators.required],
@@ -64,6 +66,8 @@ export class EventUpsertComponent implements OnInit, OnDestroy {
         (data: ResultDTO) => {
           console.log('getFormData:success', data);
           if (data.results) {
+            data.results.eventDate = new Date(this.datePipe.transform(data.results.eventDate, "YYYY-MM-ddT00:00") || "");
+
             this.form.patchValue(data.results);
           }
         },
@@ -84,6 +88,9 @@ export class EventUpsertComponent implements OnInit, OnDestroy {
     this.isFormSubmitting = true;
     let record = this.form.value;
     record['type'] =  +record['type'];
+    if(record.eventDate){
+      record.eventDate = this.datePipe.transform(record.eventDate, "YYYY-MM-ddT00:00");
+    }
     let observable: Observable<any>;
     if (this.isEdit) {
       observable = this.http.put(

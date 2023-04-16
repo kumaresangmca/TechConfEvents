@@ -19,5 +19,5 @@
     <input type="text" formControlName="socialLinks" class="form-control" placeholder="Enter Social Links">
   </div>
 
-  <button type="submit" [disabled]="!form.valid && isFormSubmitting" class="btn btn-primary" [innerText]="isFormSubmitting? 'Submitting...' : 'Submit'"></button>
+  <button type="submit" [disabled]="!form.valid || isFormSubmitting" class="btn btn-primary" [innerText]="isFormSubmitting? 'Submitting...' : 'Submit'"></button>
 </form>

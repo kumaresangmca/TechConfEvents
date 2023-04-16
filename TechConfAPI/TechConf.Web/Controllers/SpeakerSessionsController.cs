@@ -16,11 +16,13 @@ namespace TechConf.Web.Controllers
     public class SpeakerSessionsController : ControllerBase
     {
         private readonly ISpeakerSessionService<SpeakerSessionDTO> service;
+        private readonly IMailService mailService;
         [FromHeader]
         public string apiKey { get; set; } = string.Empty;
-        public SpeakerSessionsController(ISpeakerSessionService<SpeakerSessionDTO> service)
+        public SpeakerSessionsController(ISpeakerSessionService<SpeakerSessionDTO> service, IMailService mailService)
         {
             this.service = service;
+            this.mailService = mailService;
         }
 
         //get: api/speakersession/1
@@ -64,6 +66,7 @@ namespace TechConf.Web.Controllers
                 return BadRequest(resultDTO);
             }
             resultDTO.Results = data;
+            this.mailService.SendMailAsync(new MailData() { EmailToName = speaker.SpeakerName, EmailToId = speaker.SpeakerEmail, EmailSubject = speaker.Name, EmailBody = $"Event Start Time: {speaker.StartTime}, Event End Time: {speaker.EndTime}" });
             return CreatedAtAction(nameof(GetById), new { eventId = data.EventId, id = data.Id }, data);
         }
         //put: api/speakersession/1
@@ -79,6 +82,7 @@ namespace TechConf.Web.Controllers
                 resultDTO.ErrorsMessages = new List<string>() { $"Speaker session not found with Id: {id}" };
                 return NotFound(resultDTO);
             }
+            this.mailService.SendMailAsync(new MailData() { EmailToName = speaker.SpeakerName, EmailToId = speaker.SpeakerEmail, EmailSubject = speaker.Name, EmailBody = $"Event Start Time: {speaker.StartTime}, Event End Time: {speaker.EndTime}" });
             resultDTO.Results = data;
             return Ok(resultDTO);
         }

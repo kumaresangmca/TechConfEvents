@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker'
+import {TimepickerModule} from 'ngx-bootstrap/timepicker'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +18,7 @@ import { SpeakerUpsertComponent } from './feature/speakers/upsert/upsert.compone
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { EventUpsertComponent } from './feature/events/upsert/upsert.component';
 import { SpeakerSessionsUpsertComponent } from './feature/speakersessions/upsert/upsert.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -33,9 +37,14 @@ import { SpeakerSessionsUpsertComponent } from './feature/speakersessions/upsert
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot()
   ],
-  providers: [{
+  providers: [
+    DatePipe,
+    {
     provide : HTTP_INTERCEPTORS,
     useClass : AuthInterceptor,
     multi : true

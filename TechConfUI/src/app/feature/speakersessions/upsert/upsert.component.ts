@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,6 +9,7 @@ import {
 } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ApiUrl } from 'src/app/shared/constant/api.constant';
+import { EventsDTO } from 'src/app/shared/dto/eventsDTO';
 import { ResultDTO } from 'src/app/shared/dto/resultDto';
 import { SpeakerDTO } from 'src/app/shared/dto/speakerDto';
 
@@ -21,6 +23,7 @@ export class SpeakerSessionsUpsertComponent implements OnInit, OnDestroy {
   isEdit: boolean = false;
   id: number = 0;
   eventId : number = 0;
+  event: EventsDTO = {} as EventsDTO;
   speakerId : number = 0;
   showForm: boolean = true;
   subscription: any;
@@ -30,7 +33,8 @@ export class SpeakerSessionsUpsertComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    public datepipe: DatePipe
   ) {
     activatedRoute.params.subscribe((data: any) => {
       this.eventId = +data.eventId;
@@ -43,16 +47,19 @@ export class SpeakerSessionsUpsertComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    let selectedEvent = sessionStorage.getItem('selectedEvent') || '';
+    this.event = JSON.parse(selectedEvent) as EventsDTO;
     this.createForm();
   }
 
   createForm() {
+    const eventDate = this.datepipe.transform(this.event.eventDate, "YYYY-MM-ddT00:00");
     this.form = this.fb.group({
       id: [0],
       eventId : this.eventId,
       name: ['', Validators.required],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required]
+      startTime: [eventDate, Validators.required],
+      endTime: [eventDate, Validators.required]
 
     });
   }
@@ -82,6 +89,10 @@ export class SpeakerSessionsUpsertComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isFormSubmitting = true;
     let record = this.form.value;
+    record.startTime = this.datepipe.transform(record.startTime, "YYYY-MM-ddTHH:mm:ss");
+    record.endTime = this.datepipe.transform(record.endTime, "YYYY-MM-ddTHH:mm:ss");
+    record.SpeakerEmail = this.event.speaker.email;
+    record.SpeakerName = this.event.speaker.name;
     let observable: Observable<any>;
     if (this.isEdit) {
       observable = this.http.put(

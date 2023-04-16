@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TechConf.Common.Constant;
+using TechConf.Common.Options;
 using TechConf.Data;
 using TechConf.Services.Contracts;
+using TechConf.Services.Implementations;
 using TechConf.Web;
 
 var allowedOrigins = "allowedOrigins";
@@ -14,9 +16,12 @@ var builder = WebApplication.CreateBuilder(args);
 //Register Controller Service
 builder.Services.AddControllers();
 builder.Services.Configure<APIKeyOptions>(builder.Configuration.GetSection("APIKey"));
+builder.Services.Configure<MailSettingsOptions>(builder.Configuration.GetSection("MailSettingsOptions"));
 ConfigureServices.RegisterRepositories(builder.Services);
 ConfigureServices.RegisterServices(builder.Services);
 ConfigureServices.RegisterMappers(builder.Services);
+builder.Services.Configure<MailSettingsOptions>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddTransient<IMailService, MailService>();
 builder.Services.AddCors(o =>
 {
     o.AddPolicy(allowedOrigins, policy =>

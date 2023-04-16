@@ -36,7 +36,7 @@
         <td>
           <a (click)="onDownload(event)">Download</a>
           |
-          <a [routerLink]="['/speakersessions', event.id]">Manage Sessions</a>
+          <a  (click)="manageSession(event)">Manage Sessions</a>
           |
           <a [routerLink]="['/event/upsert', event.id]">Edit</a>
           |

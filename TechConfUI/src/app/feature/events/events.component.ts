@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiUrl } from 'src/app/shared/constant/api.constant';
 import { EventsDTO } from 'src/app/shared/dto/eventsDTO';
 import { ResultDTO } from 'src/app/shared/dto/resultDto';
@@ -11,7 +12,7 @@ import { ResultDTO } from 'src/app/shared/dto/resultDto';
 })
 export class EventsComponent implements OnInit {
   events: Array<EventsDTO> = [];
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.loadListData();
@@ -74,5 +75,10 @@ export class EventsComponent implements OnInit {
           console.log('onDownload: error:', error);
         }
       );
+  }
+  manageSession(event: EventsDTO){
+    sessionStorage.setItem("selectedEvent", JSON.stringify(event));
+    this.router.navigate(["speakersessions", event.id]);
+
   }
 }

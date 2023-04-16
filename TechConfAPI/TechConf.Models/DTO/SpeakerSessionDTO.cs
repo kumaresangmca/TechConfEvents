@@ -12,5 +12,8 @@ namespace TechConf.Models.DTO
         public EventDTO? Event { get; set; }       
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+
+        public string? SpeakerEmail { get; set; }
+        public string? SpeakerName { get; set; }
     }
 }
